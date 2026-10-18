@@ -16,6 +16,8 @@
 
 *Generative AI with Google Cloud · Smart Bridge Capstone Project*
 
+[![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Open%20App-brightgreen?style=for-the-badge)](https://foodverse-ai-vx2m.onrender.com)
+
 </div>
 
 ---
@@ -23,6 +25,7 @@
 ## 📑 Table of Contents
 
 - [Overview](#-overview)
+- [Live Demo](#-live-demo)
 - [Problem Statement](#-problem-statement)
 - [Solution](#-solution)
 - [Key Features](#-key-features)
@@ -54,6 +57,19 @@ It combines **computer vision**, **video analysis** and **large-language-model r
 | 4 | 👨‍🍳 Smart Kitchen Assistant | Generates recipes from available ingredients with step-by-step guidance |
 | 5 | 📅 Personalized Meal Planner | Builds daily and 7-day plans from goal, diet, allergies and budget |
 | 6 | 📊 Dashboard | Calorie history, macro splits, activity feed and PDF export |
+
+---
+
+## 🌐 Live Demo
+
+🔗 **<https://foodverse-ai-vx2m.onrender.com>**
+
+| Item | Details |
+|------|---------|
+| **Hosting** | Render |
+| **Demo account** | `akanksha@example.com` / `FoodVerse1` (or click **Continue with demo account**) |
+
+> ⏳ **Note:** The app is hosted on Render. If it has been idle, the first load may take around 30-60 seconds while the server wakes up. Please wait and refresh once if needed.
 
 ---
 
