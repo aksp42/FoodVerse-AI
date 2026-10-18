@@ -2,12 +2,11 @@ services:
   - type: web
     name: foodverse-ai
     runtime: docker
+    plan: free
     dockerfilePath: ./Dockerfile
     dockerContext: .
     envVars:
       - key: GEMINI_API_KEY
-        sync: false        # You will set this manually in Render dashboard
-      - key: PORT
-        value: "10000"     # Render assigns port via $PORT env var
+        sync: false        # Set this manually in the Render dashboard — never commit the real key
     healthCheckPath: /api/health
     autoDeploy: true

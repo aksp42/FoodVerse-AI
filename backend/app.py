@@ -779,7 +779,28 @@ def list_activities(limit: int = 25):
     """
     return database.get_recent_activities(limit)
 
+# -- Production SPA Static Hosting (Active when frontend_dist exists) ----------
+frontend_dist_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'frontend_dist')
+if os.path.isdir(frontend_dist_dir):
+    from fastapi.staticfiles import StaticFiles
+    from fastapi.responses import FileResponse
+
+    assets_dir = os.path.join(frontend_dist_dir, 'assets')
+    if os.path.isdir(assets_dir):
+        app.mount('/assets', StaticFiles(directory=assets_dir), name='assets')
+
+    @app.get('/{full_path:path}')
+    async def serve_spa(full_path: str):
+        if full_path.startswith(('api/', 'docs', 'openapi.json', 'redoc')):
+            raise HTTPException(status_code=404, detail='Not Found')
+        file_path = os.path.join(frontend_dist_dir, full_path)
+        if full_path and os.path.isfile(file_path):
+            return FileResponse(file_path)
+        return FileResponse(os.path.join(frontend_dist_dir, 'index.html'))
+
+
 if __name__ == '__main__':
     import uvicorn
     port = int(os.environ.get('PORT', 8000))
     uvicorn.run('app:app', host='0.0.0.0', port=port, reload=False)
+
