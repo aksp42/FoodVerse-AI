@@ -1,0 +1,95 @@
+# =============================================================================
+# FoodVerse AI — Backend Dependencies
+# Smart Bridge Activity 1.1 — Audited requirements.txt
+# Python: 3.11+ recommended (3.13.x global install also works for this subset)
+# Last audited: 2026-10-18
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# Web Framework & Server
+# ---------------------------------------------------------------------------
+fastapi>=0.111.0,<1.0.0          # FastAPI REST framework (Smart Bridge req.)
+uvicorn[standard]>=0.29.0,<1.0.0 # ASGI server for FastAPI
+python-multipart>=0.0.9,<1.0.0   # Required for File/Form upload parsing in FastAPI
+python-dotenv>=1.0.0,<2.0.0      # .env file loader (GEMINI_API_KEY, PORT)
+
+# ---------------------------------------------------------------------------
+# Google Gemini AI (Primary LLM/Vision — all 5 AI features)
+# NOTE: Gemini is the active AI engine. Do not remove.
+# LLaMA integration is a separate Smart Bridge gap (not yet implemented).
+# ---------------------------------------------------------------------------
+google-genai>=0.1.0,<3.0.0         # Official Google GenAI SDK (imported in app.py: from google import genai)
+google-generativeai>=0.7.0,<1.0.0  # Legacy SDK compatibility
+
+# ---------------------------------------------------------------------------
+# Image Processing (actually used in app.py)
+# ---------------------------------------------------------------------------
+Pillow>=10.0.0,<13.0.0             # PIL — _pil_from_bytes(), Image.open() in app.py
+numpy>=1.24.0,<3.0.0               # ndarray operations (imported in app.py as np)
+
+# ---------------------------------------------------------------------------
+# OpenCV — Image preprocessing (Smart Bridge req.)
+# Using headless build: no GUI/display dependencies needed on Windows server.
+# NOTE: Headless and full opencv-python conflict; install only ONE of them.
+# cv2 is functional (tested: cvtColor, resize work on Python 3.13).
+# Integration into app.py image pipeline is pending (Activity 1.x).
+# ---------------------------------------------------------------------------
+opencv-python-headless>=4.8.0,<5.0.0
+
+# ---------------------------------------------------------------------------
+# PyTorch — Deep learning (Smart Bridge req.)
+# CPU-only build; no CUDA required for this project.
+# NOTE: torch/torchvision are currently installed globally but not yet
+# integrated into the backend source. Integration is pending (Activity 1.x).
+# ---------------------------------------------------------------------------
+torch>=2.1.0,<3.0.0
+torchvision>=0.16.0,<1.0.0
+
+# ---------------------------------------------------------------------------
+# HuggingFace Transformers (Smart Bridge req. for LLaMA pathway)
+# IMPORTANT: transformers 5.x requires huggingface-hub>=1.3.0,<2.0.
+# The current global install has huggingface-hub==2.2.0 which breaks import.
+# This requirements.txt pins a compatible version for the venv.
+# ---------------------------------------------------------------------------
+transformers>=4.40.0,<5.0.0        # AutoTokenizer, pipeline — LLaMA integration path
+huggingface-hub>=0.23.0,<1.0.0     # Compatible with transformers 4.x
+
+# ---------------------------------------------------------------------------
+# Data & ML Utilities
+# ---------------------------------------------------------------------------
+pandas>=2.0.0,<3.0.0               # DataFrame operations (Smart Bridge spec)
+scikit-learn>=1.3.0,<2.0.0         # ML utilities, preprocessing (Smart Bridge spec)
+requests>=2.31.0,<3.0.0            # HTTP client for external API calls
+
+# ---------------------------------------------------------------------------
+# PDF Report Generation (Smart Bridge spec)
+# fpdf2 (imported as `fpdf`) is the maintained successor to the original fpdf.
+# The frontend currently uses jsPDF (npm); this backend library enables
+# server-side PDF generation (Activity 1.x).
+# ---------------------------------------------------------------------------
+fpdf2>=2.7.0,<3.0.0
+
+# ---------------------------------------------------------------------------
+# TensorFlow (existing ML model — /ml/FoodVerse_IndianFood_94_48_best.keras)
+# The trained MobileNetV2 model was built with TF/Keras.
+# This model is NOT yet connected to the FastAPI backend.
+# Keeping TF declared as it is part of the existing project ML asset.
+# WARNING: TensorFlow officially supports up to Python 3.12.
+#          On Python 3.13 a compatible community build is available but
+#          is not officially guaranteed. Use Python 3.11/3.12 venv for TF.
+# ---------------------------------------------------------------------------
+tensorflow>=2.15.0,<3.0.0
+
+# ---------------------------------------------------------------------------
+# NOT INCLUDED — with reasons:
+#
+# ultralytics     — YOLO object detection; not used and not in current app
+# pytesseract     — OCR; not used anywhere in app.py or planned endpoints
+# supabase        — Cloud DB; project uses SQLite (database.py) — not applicable
+# openai          — OpenAI client; project uses Google Gemini, not OpenAI
+# SpeechRecognition / pydub — Audio pipeline; not implemented in current app
+# groq            — Groq LLM API; not used and not planned
+#
+# Frontend (JS/npm) packages like jsPDF, recharts, react, lucide-react
+# are managed by food-verse-ai/package.json — NOT listed here.
+# ---------------------------------------------------------------------------
